@@ -3,5 +3,6 @@
 int
 main(int argc, char **argv, char **envp)
 {
-	printf("Hello, world\n");
+	char buf[1024];
+	printf("Hello, world: %s\n", buf);
 }
