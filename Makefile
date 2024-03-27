@@ -1,14 +1,12 @@
-CPPFLAGS += -I/opt/gcc-10/lib/gcc/x86_64-pc-solaris2.11/10.5.0/plugin/include/
-CPPFLAGS += -I/usr/include/gmp
+SUBDIRS = amd64 aarch64
 
-save-args.so: save-args.cc
-	/opt/gcc-10/bin/g++ -shared -fPIC -fno-rtti $(CPPFLAGS) $^ -o $@
+all := TARGET = save-args.so
+test := TARGET = test
+clean := TARGET = clean
 
-test: test.c
-	/opt/gcc-10/bin/gcc -fplugin=./save-args.so -g -O2 $^ -o $@
-	ctfconvert $@
+all test clean: $(SUBDIRS)
 
-.KEEP_STATE:
+$(SUBDIRS): FRC
+	make -wC $@ $(TARGET)
 
-clean:
-	rm save-args.so test
+FRC:

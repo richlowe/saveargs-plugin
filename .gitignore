@@ -1,3 +1,5 @@
 save-args.so
 test
 .make.state
+scan-dwarf/target
+scan-dwarf/Cargo.lock

@@ -1,7 +1,7 @@
-# Broken save-args as a GCC plugin
+# Prototypical save-args as a GCC plugin investigation
 
-This doesn't work, it's here to show people things.  It's derived from a lot
-of random guesswork and googling and whatnot.  It is by necessity GPL.
+This does no useful work, it's here to show people things.  It's derived from
+a lot of random guesswork and googling and whatnot.  It is by necessity GPL.
 
 1) It's _very_ fragile depending on optimization level, etc.
    The data always(?) lands, but the instructions that get it there won't
@@ -9,7 +9,7 @@ of random guesswork and googling and whatnot.  It is by necessity GPL.
 2) I cannot find a way to get our data _before_ locals on the stack, where
    they must be.
 
-In combination, these mean that the traditional `-msave-args`/`-Wu,save_args`
+In combination, these mean that the traditional `-msave-args`/`-Wu,-save_args`
 protocol (henceforth version 0) can't be used and we have to come up with an
 alternative.
 
@@ -147,3 +147,10 @@ You could see how, given `ctfconvert(1)` (and CTF) changes whereby each
 function type was annotated to say that this function has a saved argument
 block at offset `N` from the frame pointer, we could recover this easily in
 the places we currently utilize saved arguments.
+
+To investigate this more thoroughly, a tool, `scan-dwarf` is provided which
+given code built by this plugin (and containing DWARF) will report the
+argument offset and some vague statistics about its validity.
+
+You can build all of illumos (x86) using this plugin, by passing
+`-_gcc10=-fplugin=<path to plugin.so>` and fixing a couple of bugs.

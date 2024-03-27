@@ -1,0 +1,16 @@
+[package]
+name = "scan-dwarf"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+fallible-iterator = "0.3"
+getopts = "0.2"
+gimli = "0.28"
+itertools = "0.12"
+memmap2 = "0.7"
+object = "0.32"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+typed-arena = "2.0"
