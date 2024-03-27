@@ -152,5 +152,11 @@ To investigate this more thoroughly, a tool, `scan-dwarf` is provided which
 given code built by this plugin (and containing DWARF) will report the
 argument offset and some vague statistics about its validity.
 
-You can build all of illumos (x86) using this plugin, by passing
-`-_gcc10=-fplugin=<path to plugin.so>` and fixing a couple of bugs.
+You can build all of illumos using this plugin, by passing
+`-_gcc10=-fplugin=<path to plugin.so>` as `$(SAVEARGS)` and fixing a couple of
+bugs in illumos.  This exposes a problem, on aarch64, that GCC insists that
+our frame base is always local to the stack pointer (and thus much more liable
+to wander in calculation, if not result), rather than the frame pointer.  We
+could say that the first stack-pointer offset + 8 is really a frame pointer
+offset (because we "know" the frame pointer will get that value), but that's
+even more uncomfortably heuristic.
